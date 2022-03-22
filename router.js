@@ -53,11 +53,11 @@ router.post('/login', function (req, res) {
           msg: 'Login Successed.'
         })
       }
-      return res.send({
-        success: false,
-        msg: 'Login failed. Please check your account or password.'
-      })
     }
+    return res.send({
+      success: false,
+      msg: 'Login failed. Please check your account or password.'
+    })
 
   })
 })
