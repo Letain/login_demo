@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+
+    <!-- Bootstrap -->
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .register-container {
+            width: 80%;
+            border: 1px solid #e9e9e9;
+            margin: 150px auto;
+            padding: 20px 10%;
+            border-radius: 5px;
+            box-shadow: 5px 5px 5px 0 #e9e9e9;
+        }
+
+        .register-btn-container button{
+            width: 100%;
+            background: rgba(220, 0, 0, 0.349);
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="register-container">
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="nameInput">名前</label>
+                    <input type="text" name="user_name" class="form-control" id="nameInput" placeholder="name">
+                </div>
+                <div class="form-group">
+                    <label for="account">アカウント</label>
+                    <input type="text" name="user_account" class="form-control" id="account" placeholder="account">
+                </div>
+                <div class="form-group">
+                    <label for="password">パスワード</label>
+                    <input type="password" name="user_password" class="form-control" id="password" placeholder="password">
+                </div>
+                <div class="register-btn-container">
+                    <button type="submit" id="register-btn" class="btn btn-default">サインアップ</button>
+                </div>
+                <div class="register-btn-container">
+                    <button type="submit" id="login-btn" class="btn btn-default" style="margin-top: 15px;">ログインへ</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+    $('#register-btn').click(function (e) {
+      e.preventDefault()
+      const formData = $('#register-form').serialize()
+      $.ajax({
+        url:'/register',
+        method:'post',
+        data:formData
+      }).then(res=>{
+        console.log(res)
+        if (res.success){
+          location.href = '/login'
+        }else {
+          alert(res.msg)
+        }
+      })
+    })
+    
+    $('#login-btn').click(function (e) {
+      e.preventDefault()
+      location.href = '/login'
+    })
+</script>
+</body>
+</html>
+
