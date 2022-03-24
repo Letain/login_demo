@@ -8,79 +8,106 @@
 
     <!-- Bootstrap -->
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        .register-container {
-            width: 80%;
-            border: 1px solid #e9e9e9;
-            margin: 150px auto;
-            padding: 20px 10%;
-            border-radius: 5px;
-            box-shadow: 5px 5px 5px 0 #e9e9e9;
-        }
-
-        .register-btn-container button{
-            width: 100%;
-            background: rgba(220, 0, 0, 0.349);
-        }
-    </style>
+    <link href="/stylesheets/style.css" rel="stylesheet">
 </head>
 <body>
-<div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <div class="register-container">
-            <form id="register-form">
-                <div class="form-group">
-                    <label for="nameInput">名前</label>
-                    <input type="text" name="user_name" class="form-control" id="nameInput" placeholder="name">
-                </div>
-                <div class="form-group">
-                    <label for="account">アカウント</label>
-                    <input type="text" name="user_account" class="form-control" id="account" placeholder="account">
-                </div>
-                <div class="form-group">
-                    <label for="password">パスワード</label>
-                    <input type="password" name="user_password" class="form-control" id="password" placeholder="password">
-                </div>
-                <div class="register-btn-container">
-                    <button type="submit" id="register-btn" class="btn btn-default">サインアップ</button>
-                </div>
-                <div class="register-btn-container">
-                    <button type="submit" id="login-btn" class="btn btn-default" style="margin-top: 15px;">ログインへ</button>
-                </div>
-            </form>
+    <div id="head"></div>
+    <div class="">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="register-container" style="margin: 20px auto;">
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="nameInput">名前</label>
+                        <input type="text" name="name" class="form-control border_radius_15" id="nameInput" placeholder="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="account">アカウント</label>
+                        <input type="text" name="account" class="form-control border_radius_15" id="account" placeholder="account">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">パスワード</label>
+                        <input type="password" name="password" class="form-control border_radius_15" id="password" placeholder="password">
+                    </div>
+                    <div class="form-group">
+                        <!-- <label for="role">ロール</label>
+                        <input type="text" name="role" class="form-control border_radius_15" id="role" placeholder="管理者"> -->
+                        <label>ロール</label>
+                        <select class="form-control border_radius_15" id="role">
+                            <option value ="default"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birth">生年月日</label>
+                        <input type="text" name="birth" class="form-control border_radius_15" id="bitrh" placeholder="2000-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">メール</label>
+                        <input type="text" name="email" class="form-control border_radius_15" id="email" placeholder="dummy@dummy.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">アドレス</label>
+                        <input type="text" name="address" class="form-control border_radius_15" id="address" placeholder="東京 新宿区戸塚町1-1000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">電話番号</label>
+                        <input type="text" name="phone" class="form-control border_radius_15" id="phone" placeholder="0000000000">
+                    </div>
+                    <div class="register-btn-container">
+                        <button type="submit" id="register-btn" class="btn btn-default border_radius_15">サインアップ</button>
+                    </div>
+                    <div class="register-btn-container">
+                        <button type="submit" id="login-btn" class="btn btn-default border_radius_15" style="margin-top: 15px;">ログインへ</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
-
+        <div class="col-md-4"></div>
     </div>
-    <div class="col-md-4"></div>
-</div>
 
-<script src="../node_modules/jquery/dist/jquery.min.js"></script>
-<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script>
-    $('#register-btn').click(function (e) {
-      e.preventDefault()
-      const formData = $('#register-form').serialize()
-      $.ajax({
-        url:'/register',
-        method:'post',
-        data:formData
-      }).then(res=>{
-        console.log(res)
-        if (res.success){
-          location.href = '/login'
-        }else {
-          alert(res.msg)
-        }
-      })
-    })
-    
-    $('#login-btn').click(function (e) {
-      e.preventDefault()
-      location.href = '/login'
-    })
-</script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        $('#head').load('./header_notlogin');
+
+        $.ajax({
+            url:'/getRoles',
+            method:'get'
+        }).then(res=>{
+            if(res){
+                var roleSelector = $('#role');
+                for(var key in res){
+                    var newOption = "<option value='" + key +"'>"+ res[key] +"</option>"                    
+                    roleSelector.append(newOption);
+                }
+            }
+        })
+        
+        $('#register-btn').click(function (e) {
+            e.preventDefault()
+            var formData = $('#register-form').serialize()
+            var roleSelectedValue = $('#role option:selected').val()
+            formData = formData + '&role_id=' + roleSelectedValue
+            $.ajax({
+                url:'/register',
+                method:'post',
+                data:formData
+            }).then(res=>{
+                console.log(res)
+                if (res.success){
+                location.href = '/login'
+                }else {
+                alert(res.msg)
+                }
+            })
+        })
+        
+        $('#login-btn').click(function (e) {
+            e.preventDefault()
+            location.href = '/login'
+        })
+    </script>
 </body>
 </html>
 

@@ -5,7 +5,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   port: 3306,
   user: 'root',
-  password: '12345678',
+  password: 'yangfang@yc1987',
   database: 'stj'
 });
 
@@ -17,7 +17,7 @@ connection.connect();
 exports.save = function (user) {
   user.user_password = md5(user.user_password)
   return new Promise((resolve,reject)=>{
-    connection.query(`insert into users (user_name,user_account,user_password) value ('${user.user_name}','${user.user_account}','${user.user_password}')`, function (err, res, fields) {
+    connection.query(`insert into users (name,account,password,role_id,lock_status,login_status,birth,email,address,phone,create_datetime,update_datetime) value ('${user.name}','${user.account}','${user.password}','${user.role_id}',0,0,'${user.birth}','${user.email}','${user.address}','${user.phone}',now(),now())`, function (err, res, fields) {
       if (err) {
         // 发生错误的时候执行reject
         reject(err)
