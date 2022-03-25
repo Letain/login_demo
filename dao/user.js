@@ -15,7 +15,7 @@ connection.connect();
  *  save account
  */
 exports.save = function (user) {
-  user.user_password = md5(user.user_password)
+  user.password = md5(user.password)
   return new Promise((resolve,reject)=>{
     connection.query(`insert into users (name,account,password,role_id,lock_status,login_status,birth,email,address,phone,create_datetime,update_datetime) value ('${user.name}','${user.account}','${user.password}','${user.role_id}',0,0,'${user.birth}','${user.email}','${user.address}','${user.phone}',now(),now())`, function (err, res, fields) {
       if (err) {
@@ -35,7 +35,7 @@ exports.findOne = function (user) {
   const where = []
   
   if(user.user_account){
-    where.push(` and user_account = '${user.user_account}'`)
+    where.push(` and account = '${user.user_account}'`)
   }
   return new Promise((resolve,reject)=>{
     connection.query(`select * from users where 1 = 1 ${where.join('')}`, function (err, res, fields) {

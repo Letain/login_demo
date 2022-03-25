@@ -7,9 +7,13 @@ const { route } = require('express/lib/application')
 const router = express.Router()
 
 
-router.get('/home', function(req, res){
-  res.render('./home.html')
-})
+// router.get('/home', function(req, res){  
+//   if (req.session.isLogin) {
+//     res.render('./home.html')
+//   } else {
+//     res.render('./login.html')
+//   }
+// })
 router.get('/index', function(req, res){
   res.render('./index.html')
 })
@@ -20,6 +24,10 @@ router.get('/header_notlogin', function(req, res){
 
 router.get('/header_index', function(req, res){
   res.render('./header_index.html')
+})
+
+router.get('/header', function(req, res){
+  res.render('./header.html')
 })
 
 // router.get('/*', function(req, res, next) {
@@ -128,9 +136,9 @@ router.post('/dologout', function (req, res) {
 router.get('/', function (req, res) {
   console.log(req.session)
   if (req.session.isLogin) {
-    res.render('./index.html')
+    res.render('./home.html')
   } else {
-    res.render('./login.html')
+    res.render('./index.html')
   }
 })
 

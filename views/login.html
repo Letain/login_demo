@@ -19,11 +19,11 @@
               <form id="register-form">
                   <div class="form-group">
                       <label for="account">アカウント</label>
-                      <input type="text" name="user_account" class="form-control border_radius_15" id="account" placeholder="account">
+                      <input type="text" name="account" class="form-control border_radius_15" id="account" placeholder="account">
                   </div>
                   <div class="form-group">
                       <label for="password">パスワード</label>
-                      <input type="password" name="user_password" class="form-control border_radius_15" id="password" placeholder="password">
+                      <input type="password" name="password" class="form-control border_radius_15" id="password" placeholder="password">
                   </div>
                   <div class="register-btn-container">
                       <button type="submit" id="register-btn" class="btn btn-default border_radius_15 margin_top_20">ログイン</button>
@@ -60,10 +60,10 @@
       })
     })
 
-    $('#go-register-btn').click(function (e) {
-      e.preventDefault()
-      location.href = '/Register'
-    })
+    // $('#go-register-btn').click(function (e) {
+    //   e.preventDefault()
+    //   location.href = '/Register'
+    // })
   </script>
 </body>
 </html>
