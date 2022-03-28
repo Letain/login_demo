@@ -75,3 +75,84 @@ a {
 .menu:active {
   background: #aaaaaa;
 }
+
+
+ul {
+  list-style: none;
+  position: relative;
+  text-align: left;
+}
+
+li {
+  float: left;
+}
+
+/* clear'n floats */
+ul:after {
+  clear: both;
+}
+
+ul:before,
+ul:after {
+    content: " ";
+    display: table;
+}
+
+/* prime */
+/* ul.primary li a {
+  display: block;
+  padding: 20px 30px;
+  border-right: 1px solid #3D3D3D;
+}
+
+ul.primary li:last-child a {
+  border-right: none;
+}
+
+ul.primary li a:hover {
+  
+  color: #000;
+} */
+
+/* subs */
+ul.sub {
+  position: absolute;
+  z-index: 200;
+  box-shadow: 2px 2px 0 #BEBEBE;
+  /* width: 35%; */
+  display:none;
+  font-size: 20px;
+  font-weight: normal;
+  background: #eee;
+  margin: 0 0 0 -100px;
+}
+
+ul.sub li {
+  float: none;
+  margin: 0;
+}
+
+ul.sub li a {
+  border-bottom: 1px dotted #444;
+  border-right: none;
+  color: #000;
+  padding: 15px 30px;
+  display: block;
+  text-decoration: none;
+}
+
+ul.sub li:last-child a {
+  border-bottom: none;
+}
+
+ul.sub li a:hover {
+  color: #fff;
+  /* background: #555; */
+  cursor: pointer;
+}
+
+/* sub display*/
+.header_not_login .header_right:hover ul {
+  display: block;
+  background: #eee;
+}
